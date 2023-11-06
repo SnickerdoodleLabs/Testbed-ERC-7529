@@ -1,4 +1,5 @@
 import React from 'react';
+import "reflect-metadata";
 import './App.css';
 import './Footer';
 import Footer from './Footer';

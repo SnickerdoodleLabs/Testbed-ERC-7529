@@ -2,6 +2,7 @@ import { useState, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 //import { ethers, Provider } from 'ethers';
 import { staticUtils } from '@snickerdoodlelabs/erc7529';
 import { ChainId, DomainName } from '@snickerdoodlelabs/objects';
+import "reflect-metadata";
 import './App.css';
 
 export default function DomainInput() {
@@ -29,6 +30,7 @@ export default function DomainInput() {
           const results = await staticUtils.getContractsFromDomain(domain,chain);
           if (results.isOk()) {
             console.log("Contracts:", results.value);
+            setValue(results.value[0]);
           }
         })();
       }, [domain, chain]);
@@ -43,7 +45,6 @@ export default function DomainInput() {
             const target: EventTarget = event.target;
             console.log(event)
             if (target) {
-                setValue("Searching...");
                 const domainName: DomainName = DomainName((target as HTMLButtonElement).value);
                 setDomain(domainName);
             }
