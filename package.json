@@ -4,6 +4,7 @@
   "homepage": "https://erc7529.snickerdoodle.com",
   "private": true,
   "dependencies": {
+    "@snickerdoodlelabs/contracts-sdk": "^1.5.0",
     "@snickerdoodlelabs/erc7529": "1.0.2",
     "@snickerdoodlelabs/objects": "^1.1.5",
     "@testing-library/jest-dom": "^5.17.0",
