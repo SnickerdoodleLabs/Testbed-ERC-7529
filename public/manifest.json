@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ERC-7529 Demo",
+  "name": "ERC-7529 Demonstration App",
   "icons": [
     {
       "src": "favicon.ico",
