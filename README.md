@@ -1,4 +1,4 @@
-[![Snickerdoodle Protocol](/snickerdoodle_horizontal_notab.png)](https://snickerdoodle.com)
+[![Snickerdoodle Protocol](/src/snickerdoodle_horizontal_notab.png)](https://snickerdoodle.com)
 
 # ERC-7529 Tutorial Application
 
