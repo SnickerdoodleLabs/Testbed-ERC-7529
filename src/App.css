@@ -15,18 +15,18 @@
 }
 
 .App-body {
-  background-color: #282c34;
+  background-color: #fff3df;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #232039;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #289f8a;
 }
 
 @keyframes App-logo-spin {
@@ -64,7 +64,7 @@
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #512da8;
+  color: #232039;
 }
 
 .field input {
@@ -88,7 +88,7 @@
 }
 
 .field input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #232039
 }
 .field input::-moz-placeholder {
   color: rgba(255, 255, 255, 0.8);
@@ -108,7 +108,7 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 24px;
-  color: #ffffff;
+  color: #232039;
   opacity: 0;
   pointer-events: none;
   transition: 0.1s all ease-in-out;
@@ -121,7 +121,7 @@
   grid-template-columns: 4fr 1fr;
   position: fixed;
   bottom: 0;
-  background: #262a31;
+  background: #ffd68f;
   padding: 0px 0px 25px 0px;
   height: 20px;
 }
@@ -135,7 +135,7 @@
 }
 
 a.copyright{
-  color: #00ff2a;
+  color: #289f8a;
 }
 
 .social {
