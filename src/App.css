@@ -88,16 +88,16 @@
 }
 
 .field input::-webkit-input-placeholder {
-  color: #232039
+  color: #232039;
 }
 .field input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #232039;
 }
 .field input:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #232039;
 }
 .field input:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: #232039;
 }
 
 .field input + label {
