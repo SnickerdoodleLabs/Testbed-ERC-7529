@@ -5,7 +5,6 @@ import { ERC7529ContractProxy } from '@snickerdoodlelabs/contracts-sdk';
 import { ChainId, DomainName, EVMContractAddress } from '@snickerdoodlelabs/objects';
 import "reflect-metadata";
 import './App.css';
-import { verify } from 'crypto';
 
 export default function DomainInput() {
 
@@ -93,7 +92,7 @@ export default function DomainInput() {
             </div><br></br>
             <ul className='results'>
                 {
-                    results.map((result) => <div>{result.address}, {result.verified ? "Verified" : "Not Verified"}</div>)
+                    results.map((result) => <div key={result.address}>{result.address}: {result.verified ? "Verified" : "Not verified"} on chain {chain}.</div>)
                 }
             </ul>
         </>
