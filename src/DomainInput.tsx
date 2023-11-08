@@ -15,7 +15,6 @@ export default function DomainInput() {
     const [placeholder, setPlaceholder] = useState<string>("Enter a Domain Name:")
     const [value, setValue] = useState<string>("");
     const [fieldName, setFieldName] = useState<string>('field');
-    const [domain, setDomain] = useState<DomainName>(DomainName(''));
     const [chain, setChain] = useState<ChainId>(ChainId(43113));
     const [results, setResult] = useState<verifedContract[]>([]);
 
@@ -34,7 +33,6 @@ export default function DomainInput() {
             if (target) {
                 // grab the domain that was entered intot the text input field 
                 const domainName: DomainName = DomainName((target as HTMLButtonElement).value);
-                setDomain(domainName);
                 try {
                     if (window.ethereum != null) {
                         const currentChain = await window.ethereum.request(
@@ -56,7 +54,7 @@ export default function DomainInput() {
                                     async (address) => {
                                         const myContract = new ERC7529ContractProxy(provider, EVMContractAddress(address));
                                         if (window.ethereum != null) {
-                                            const isVerified = await staticUtils.verifyContractForDomain(myContract, domain, chain);
+                                            const isVerified = await staticUtils.verifyContractForDomain(myContract, domainName, chain);
                                             if (isVerified.isOk()) {
                                                 resultsBuf.push({ address: address, verified: true })
                                             } else {
