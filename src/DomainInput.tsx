@@ -1,4 +1,4 @@
-import { useState, useEffect, KeyboardEvent, ChangeEvent } from 'react';
+import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { ethers } from 'ethers';
 import { staticUtils } from '@snickerdoodlelabs/erc7529';
 import { ERC7529ContractProxy } from '@snickerdoodlelabs/contracts-sdk';
@@ -23,10 +23,6 @@ export default function DomainInput() {
         if (target) setValue((target as HTMLButtonElement).value);
     }
 
-    function updateResultsArray(newResults: verifedContract[]) {
-        setResult(newResults);
-    }
-
     async function handleKeyPress(event: KeyboardEvent) {
         if (event.code === 'Enter') {
             const target: EventTarget = event.target;
@@ -49,23 +45,21 @@ export default function DomainInput() {
                             if (addresses.value.length > 0) {
                                 let resultsBuf: verifedContract[] = [];
                                 const provider = new ethers.providers.Web3Provider(window.ethereum);
-                                provider.getNetwork();
-                                addresses.value.map(
-                                    async (address) => {
-                                        const myContract = new ERC7529ContractProxy(provider, EVMContractAddress(address));
-                                        if (window.ethereum != null) {
-                                            const isVerified = await staticUtils.verifyContractForDomain(myContract, domainName, chain);
-                                            if (isVerified.isOk()) {
-                                                resultsBuf.push({ address: address, verified: true })
-                                            } else {
-                                                resultsBuf.push({ address: address, verified: false })
-                                            }
+                                await provider.getNetwork();
+                                for (const address of addresses.value){
+                                    const myContract = new ERC7529ContractProxy(provider, EVMContractAddress(address));
+                                    if (window.ethereum != null) {
+                                        const isVerified = await staticUtils.verifyContractForDomain(myContract, domainName, chain);
+                                        if (isVerified.isOk()) {
+                                            resultsBuf.push({ address: address, verified: true })
+                                        } else {
+                                            resultsBuf.push({ address: address, verified: false })
                                         }
                                     }
-                                )
+                                }
                                 console.log("resultBuf:", resultsBuf);
                                 setLabel("Found Something! Try another domain:");
-                                updateResultsArray(resultsBuf);
+                                setResult(resultsBuf);
                             } else {
                                 setLabel("Try a different domain:");
                                 setResult([]);
@@ -104,7 +98,9 @@ export default function DomainInput() {
                     {label}
                 </label>
             </div><br></br>
-            <ResultsList results={results} chain={chain} />
+            <div>
+                <ResultsList results={results} chain={chain} />
+            </div>
         </>
     );
 }
