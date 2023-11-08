@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.60483413.css",
+    "main.js": "/static/js/main.935ddb01.js",
+    "static/js/787.0e828ed3.chunk.js": "/static/js/787.0e828ed3.chunk.js",
+    "static/media/snickerdoodle_horizontal_notab.png": "/static/media/snickerdoodle_horizontal_notab.645a260c81b4582244ff.png",
+    "index.html": "/index.html",
+    "main.60483413.css.map": "/static/css/main.60483413.css.map",
+    "main.935ddb01.js.map": "/static/js/main.935ddb01.js.map",
+    "787.0e828ed3.chunk.js.map": "/static/js/787.0e828ed3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.60483413.css",
+    "static/js/main.935ddb01.js"
+  ]
+}
