@@ -1,6 +1,6 @@
 {
-  "name": "ERC-7529 Testbed",
-  "version": "0.1.0",
+  "name": "erc-7529-testbed",
+  "version": "1.0.0",
   "homepage": "https://erc7529.snickerdoodle.com",
   "private": true,
   "dependencies": {
@@ -17,6 +17,7 @@
     "ethers": "5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-scripts": "5.0.1",
     "reflect-metadata": "^0.1.13",

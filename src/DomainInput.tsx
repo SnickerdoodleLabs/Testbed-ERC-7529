@@ -3,15 +3,13 @@ import { ethers } from 'ethers';
 import { staticUtils } from '@snickerdoodlelabs/erc7529';
 import { ERC7529ContractProxy } from '@snickerdoodlelabs/contracts-sdk';
 import { ChainId, DomainName, EVMContractAddress } from '@snickerdoodlelabs/objects';
+import toast, { Toaster } from "react-hot-toast";
 import "reflect-metadata";
+import { verifedContract } from './objects'
+import ResultsList from './ResultsList';
 import './App.css';
 
 export default function DomainInput() {
-
-    interface verifedContract {
-        address: EVMContractAddress;
-        verified: Boolean
-    };
 
     const [label, setLabel] = useState<string>("Enter a Domain Name:");
     const [placeholder, setPlaceholder] = useState<string>("Enter a Domain Name:")
@@ -26,28 +24,32 @@ export default function DomainInput() {
         if (target) setValue((target as HTMLButtonElement).value);
     }
 
+    function updateResultsArray(newResults: verifedContract[]) {
+        setResult(newResults);
+    }
+
     async function handleKeyPress(event: KeyboardEvent) {
         if (event.code === 'Enter') {
             const target: EventTarget = event.target;
-            console.log(event)
             if (target) {
+                // grab the domain that was entered intot the text input field 
                 const domainName: DomainName = DomainName((target as HTMLButtonElement).value);
                 setDomain(domainName);
                 try {
-                    const currentChain = await window.ethereum.request(
-                        {
-                            "method": "eth_chainId",
-                            "params": []
-                        }
-                    );
-                    setChain(ChainId(Number(currentChain)));
-                    // first check if domain has TXT pointer to some contracts
-                    const addresses = await staticUtils.getContractsFromDomain(domainName, chain);
-                    // if so, verify each contract
-                    if (addresses.isOk()) {
-                        if (addresses.value.length > 0) {
-                            let resultsBuf: verifedContract[] = [];
-                            if (window.ethereum != null) {
+                    if (window.ethereum != null) {
+                        const currentChain = await window.ethereum.request(
+                            {
+                                "method": "eth_chainId",
+                                "params": []
+                            }
+                        );
+                        setChain(ChainId(Number(currentChain)));
+                        // first check if domain has TXT pointer to some contracts
+                        const addresses = await staticUtils.getContractsFromDomain(domainName, chain);
+                        // if so, verify each contract
+                        if (addresses.isOk()) {
+                            if (addresses.value.length > 0) {
+                                let resultsBuf: verifedContract[] = [];
                                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                                 provider.getNetwork();
                                 addresses.value.map(
@@ -55,7 +57,6 @@ export default function DomainInput() {
                                         const myContract = new ERC7529ContractProxy(provider, EVMContractAddress(address));
                                         if (window.ethereum != null) {
                                             const isVerified = await staticUtils.verifyContractForDomain(myContract, domain, chain);
-                                            console.log(isVerified)
                                             if (isVerified.isOk()) {
                                                 resultsBuf.push({ address: address, verified: true })
                                             } else {
@@ -64,14 +65,18 @@ export default function DomainInput() {
                                         }
                                     }
                                 )
-                                setResult(resultsBuf);
                                 console.log("resultBuf:", resultsBuf);
                                 setLabel("Found Something! Try another domain:");
-                            } else { }
-                        } else {
-                            setLabel("Try a different domain:");
-                            setResult([]);
+                                updateResultsArray(resultsBuf);
+                            } else {
+                                setLabel("Try a different domain:");
+                                setResult([]);
+                            }
                         }
+                    } else {
+                        toast.error('You will need Metamask installed for this app to verify contracts.')
+                        setLabel("Please install a wallet & try again:");
+                        setResult([]);
                     }
                 } catch {
                     setLabel("Try a different domain:");
@@ -84,6 +89,7 @@ export default function DomainInput() {
 
     return (
         <>
+            <Toaster />
             <div className={fieldName}>
                 <input
                     id='1'
@@ -100,11 +106,7 @@ export default function DomainInput() {
                     {label}
                 </label>
             </div><br></br>
-            <ul className='results'>
-                {
-                    results.map((result) => <div key={result.address}>{result.address}: {result.verified ? "Verified" : "Not verified"} on chain {chain}.</div>)
-                }
-            </ul>
+            <ResultsList results={results} chain={chain} />
         </>
     );
 }
