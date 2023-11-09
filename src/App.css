@@ -19,6 +19,10 @@
   padding: 8px 0px 0px 8px;
 }
 
+a.header:hover {
+  transform: translateY(-2px);
+}
+
 .App-body {
   background-color: #fff3df;
   min-height: 100vh;
