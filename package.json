@@ -1,7 +1,7 @@
 {
   "name": "erc-7529-testbed",
   "version": "1.0.0",
-  "homepage": "https://snickerdoodlelabs.github.io/Testbed-ERC-7529/",
+  "homepage": "https://erc7529.snickerdoodle.com",
   "private": false,
   "dependencies": {
     "@snickerdoodlelabs/contracts-sdk": "^1.5.1",

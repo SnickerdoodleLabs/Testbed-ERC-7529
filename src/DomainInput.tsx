@@ -31,25 +31,31 @@ export default function DomainInput() {
                 const domainName: DomainName = DomainName((target as HTMLButtonElement).value);
                 try {
                     if (window.ethereum != null) {
-                        const currentChain = await window.ethereum.request(
-                            {
-                                "method": "eth_chainId",
-                                "params": []
-                            }
+                        const currentChain = ChainId(
+                            Number(
+                                await window.ethereum.request(
+                                    {
+                                        "method": "eth_chainId",
+                                        "params": []
+                                    }
+                                )
+                            )
                         );
-                        setChain(ChainId(Number(currentChain)));
+                        console.log("current chain", currentChain)
+                        setChain(currentChain);
                         // first check if domain has TXT pointer to some contracts
-                        const addresses = await staticUtils.getContractsFromDomain(domainName, chain);
+                        const addresses = await staticUtils.getContractsFromDomain(domainName, currentChain);
+                        console.log("addresses:", addresses);
                         // if so, verify each contract
                         if (addresses.isOk()) {
                             if (addresses.value.length > 0) {
                                 let resultsBuf: verifedContract[] = [];
                                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                                 await provider.getNetwork();
-                                for (const address of addresses.value){
+                                for (const address of addresses.value) {
                                     const myContract = new ERC7529ContractProxy(provider, EVMContractAddress(address));
                                     if (window.ethereum != null) {
-                                        const isVerified = await staticUtils.verifyContractForDomain(myContract, domainName, chain);
+                                        const isVerified = await staticUtils.verifyContractForDomain(myContract, domainName, currentChain);
                                         if (isVerified.isOk()) {
                                             resultsBuf.push({ address: address, verified: true })
                                         } else {
@@ -98,9 +104,7 @@ export default function DomainInput() {
                     {label}
                 </label>
             </div><br></br>
-            <div>
-                <ResultsList results={results} chain={chain} />
-            </div>
+            <ResultsList results={results} chain={chain} />
         </>
     );
 }
