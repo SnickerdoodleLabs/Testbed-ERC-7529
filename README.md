@@ -8,7 +8,7 @@ See `handleKeyPress` function in [`DomainInput.tsx`](/src/DomainInput.tsx) for a
 
 ## How to Use this App
 
-You'll need a browser extension installed that injects an ethereum provider (`window.ethereum`), like [Metamask](https://metamask.io/). Next, you'll need to togle the active network in your extension to the target network you are interested in, (like Fuji testnet). Then type in the name of a domain (like `snickerdoodle.com`) and see if any contracts are associated with that domain on the network your wallet is connected to. 
+You'll need a browser extension installed that injects an ethereum provider (`window.ethereum`), like [Metamask](https://metamask.io/). Next, you'll need to toggle the active network in your extension to the target network you are interested in, (like Fuji testnet). Then type in the name of a domain (like `snickerdoodle.com`) and see if any contracts are associated with that domain on the network your wallet is connected to. 
 
 ## Local Development
 
